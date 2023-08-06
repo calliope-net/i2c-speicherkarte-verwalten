@@ -60,6 +60,20 @@ function zeigeDateiName () {
     zeigeStatus()
     lcd16x2rgb.setCursorCB(lcd16x2rgb.eADDR_LCD.LCD_16x2, 0, 2, lcd16x2rgb.eONOFF.ON, lcd16x2rgb.eONOFF.OFF)
 }
+input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
+    if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
+        qwiicopenlog.listDirectory(qwiicopenlog.eADDR.LOG_Qwiic, qwiicopenlog.getString(qwiicopenlog.eArray.SearchString), 20)
+        zeigeDateiName()
+    } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.write)) {
+        qwiicopenlog.syncFile(qwiicopenlog.eADDR.LOG_Qwiic)
+        qwiicopenlog.checkStatusRegister(qwiicopenlog.eADDR.LOG_Qwiic)
+        zeigeStatus()
+    } else {
+        _("zurück zu Status 2 start")
+        qwiicopenlog.checkStatusRegister(qwiicopenlog.eADDR.LOG_Qwiic)
+        zeigeStatus()
+    }
+})
 function zeigeStatus () {
     if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.error_SD)) {
         lcd16x2rgb.writeText(lcd16x2rgb.eADDR_LCD.LCD_16x2, 0, 0, 2, lcd16x2rgb.eAlign.left, bit.formatNumber(qwiicopenlog.readRegister(qwiicopenlog.eADDR.LOG_Qwiic, qwiicopenlog.eReadRegister.status), bit.eLength.HEX_FF))
@@ -95,7 +109,7 @@ function _ (Kommentar: string) {
 input.onButtonEvent(Button.A, input.buttonEventValue(ButtonEvent.Hold), function () {
     if (!(input.buttonIsPressed(Button.B))) {
         if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
-        	
+            schreibeUmlaute("UMLAUTE.TXT")
         } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.dir)) {
             _("Dateigröße in Zeile 0 rechtsbündig anzeigen")
             lcd16x2rgb.writeText(lcd16x2rgb.eADDR_LCD.LCD_16x2, 0, 2, 15, lcd16x2rgb.eAlign.right, convertToText(qwiicopenlog.readInt32BE(qwiicopenlog.eADDR.LOG_Qwiic, qwiicopenlog.eWriteStringReadInt32BE.fileSize, qwiicopenlog.getString(qwiicopenlog.eArray.FileName))))
