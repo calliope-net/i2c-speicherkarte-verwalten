@@ -34,7 +34,6 @@ function zeigeDateiName () {
     lcd16x2rgb.setCursorCB(lcd16x2rgb.eADDR_LCD.LCD_16x2, 0, 2, lcd16x2rgb.eONOFF.ON, lcd16x2rgb.eONOFF.OFF)
 }
 function zeigeStatus () {
-    bloop = false
     if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.error_SD)) {
         lcd16x2rgb.writeText(lcd16x2rgb.eADDR_LCD.LCD_16x2, 0, 0, 2, lcd16x2rgb.eAlign.left, bit.formatNumber(qwiicopenlog.readRegister(qwiicopenlog.eADDR.LOG_Qwiic, qwiicopenlog.eReadRegister.status), bit.eLength.HEX_FF))
         lcd16x2rgb.writeText(lcd16x2rgb.eADDR_LCD.LCD_16x2, 0, 3, 15, lcd16x2rgb.eAlign.left, "Speicherkarte")
@@ -93,7 +92,7 @@ input.onButtonEvent(Button.B, input.buttonEventValue(ButtonEvent.Hold), function
 })
 input.onButtonEvent(Button.AB, input.buttonEventValue(ButtonEvent.Hold), function () {
     if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
-        bloop = true
+    	
     } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.dir)) {
         _("aktuelle Datei löschen")
         iRemove = qwiicopenlog.readInt32BE(qwiicopenlog.eADDR.LOG_Qwiic, qwiicopenlog.eWriteStringReadInt32BE.remove, qwiicopenlog.getString(qwiicopenlog.eArray.FileName))
@@ -101,13 +100,6 @@ input.onButtonEvent(Button.AB, input.buttonEventValue(ButtonEvent.Hold), functio
     }
 })
 let iRemove = 0
-let bloop = false
 lcd16x2rgb.initLCD(lcd16x2rgb.eADDR_LCD.LCD_16x2)
 qwiicopenlog.checkStatusRegister(qwiicopenlog.eADDR.LOG_Qwiic)
 zeigeStatus()
-loops.everyInterval(10000, function () {
-    // i2cexamples.foreverDateLog(lcd16x2rgb.eADDR_LCD.LCD_16x2, pcf865063tp.eADDR.RTC_PCF85063TP, qwiicopenlog.eADDR.LOG_Qwiic)
-    if (bloop) {
-    	
-    }
-})
