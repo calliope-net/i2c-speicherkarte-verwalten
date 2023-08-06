@@ -1,21 +1,28 @@
 
 > Diese Seite bei [https://calliope-net.github.io/i2c-speicherkarte-verwalten/](https://calliope-net.github.io/i2c-speicherkarte-verwalten/) öffnen
 
-## Dieses Projekt bearbeiten
+### Dieses Projekt importieren, mit Calliope testen, bearbeiten
 
-Um dieses Repository in MakeCode zu bearbeiten.
+Um dieses Repository in MakeCode zu importieren.
 
-* öffne [https://makecode.microbit.org/](https://makecode.microbit.org/)
+* öffne [https://makecode.calliope.cc](https://makecode.calliope.cc)
 * klicke auf **Importieren** und dann auf **Importiere URL**
-* füge **https://github.com/calliope-net/i2c-speicherkarte-verwalten** ein und klicke auf Importieren
+* kopiere die folgende **URL des Projekts** in die Zwischenablage
+* **https://github.com/calliope-net/i2c-speicherkarte-verwalten**
+  * (dreimal klicken, um die ganze Zeile zu markieren, Strg-C)
+* füge sie auf der Webseite ein (Strg-V) und klicke auf **Los geht's!**
 
+#### Speicherkarte verwalten - Bedienung
 
-Speicherkarte verwalten - Bedienung
-
-* Knopf A geklickt                Knopf B geklickt (ändert Index und zeigt neues Element aus dem Array an)
-  *    start - SeachString -1      SeachString +1
-  *    dir     Datei-Name -1       Datei-Name +1
-  *    read    Datei-Inhalt -32    Datei-Inhalt +32
+* Knopf A geklickt (ändert Index um -1 und zeigt neues Element aus dem Array an)
+  *    start - SeachString -1
+  *    dir     Datei-Name -1
+  *    read    Datei-Inhalt -32
+  *    write   
+* Knopf B geklickt (ändert Index um +1 und zeigt neues Element aus dem Array an)
+  *    start - SeachString +1
+  *    dir     Datei-Name +1
+  *    read    Datei-Inhalt +32
   *    write   
 * Knopf A+B geklickt (zeigt Dateinamen und kehrt sonst immer zum Anfang zurück)
   *    start   DIR (list directory)
@@ -39,3 +46,7 @@ Speicherkarte verwalten - Bedienung
   *    -read
   *    -write
 
+#### Metadaten (verwendet für Suche, Rendering)
+
+* Calliope mini
+* i2c
