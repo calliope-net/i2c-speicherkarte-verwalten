@@ -2,8 +2,8 @@
     "name": "i2c-speicherkarte-verwalten",
     "dependencies": {
         "core": "*",
-        "radio": "*",
-        "microphone": "*"
+        "lcd-16x2rgb": "github:calliope-net/lcd-16x2rgb#v1.0.0",
+        "bit": "github:calliope-net/bit#v1.0.0"
     },
     "files": [
         "main.blocks",
@@ -14,11 +14,12 @@
         "test.ts"
     ],
     "targetVersions": {
-        "target": "6.0.17",
-        "targetId": "microbit"
+        "target": "4.0.35",
+        "targetId": "calliopemini"
     },
     "supportedTargets": [
+        "calliopemini",
         "microbit"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }
