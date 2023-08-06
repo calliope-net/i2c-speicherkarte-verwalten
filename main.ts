@@ -1,3 +1,30 @@
+function schreibeUmlaute (pFilename: string) {
+    lcd16x2rgb.screenClear(lcd16x2rgb.eADDR_LCD.LCD_16x2)
+    lcd16x2rgb.writeText(lcd16x2rgb.eADDR_LCD.LCD_16x2, 0, 0, 15, lcd16x2rgb.eAlign.left, pFilename)
+    iSize2 = qwiicopenlog.readInt32BE(qwiicopenlog.eADDR.LOG_Qwiic, qwiicopenlog.eWriteStringReadInt32BE.fileSize, pFilename)
+    basic.pause(5000)
+    if (iSize2 < 0) {
+        lcd16x2rgb.writeText(lcd16x2rgb.eADDR_LCD.LCD_16x2, 1, 0, 15, lcd16x2rgb.eAlign.left, "nicht gefunden")
+    } else if (iSize2 > 0) {
+        lcd16x2rgb.writeText(lcd16x2rgb.eADDR_LCD.LCD_16x2, 0, 0, 15, lcd16x2rgb.eAlign.left, "Datei Größe " + iSize2)
+        lcd16x2rgb.writeText(lcd16x2rgb.eADDR_LCD.LCD_16x2, 1, 0, 15, lcd16x2rgb.eAlign.left, "wird gelöscht")
+        basic.pause(5000)
+        iSize2 = qwiicopenlog.readInt32BE(qwiicopenlog.eADDR.LOG_Qwiic, qwiicopenlog.eWriteStringReadInt32BE.remove, pFilename)
+        lcd16x2rgb.writeText(lcd16x2rgb.eADDR_LCD.LCD_16x2, 1, 0, 15, lcd16x2rgb.eAlign.left, "gelöscht " + iSize2)
+    }
+    qwiicopenlog.writeFile(qwiicopenlog.eADDR.LOG_Qwiic, pFilename, "äöüßÄÖÜ", qwiicopenlog.eCRLF.CRLF)
+    qwiicopenlog.writeFile(qwiicopenlog.eADDR.LOG_Qwiic, pFilename, "gjpqy", qwiicopenlog.eCRLF.CRLF)
+    qwiicopenlog.writeFile(qwiicopenlog.eADDR.LOG_Qwiic, pFilename, "~ 1€ 2µF -3°C", qwiicopenlog.eCRLF.CRLF)
+    iSize2 = qwiicopenlog.readInt32BE(qwiicopenlog.eADDR.LOG_Qwiic, qwiicopenlog.eWriteStringReadInt32BE.fileSize, pFilename)
+    lcd16x2rgb.writeText(lcd16x2rgb.eADDR_LCD.LCD_16x2, 0, 0, 15, lcd16x2rgb.eAlign.left, "neue Datei " + iSize2)
+    lcd16x2rgb.writeText(lcd16x2rgb.eADDR_LCD.LCD_16x2, 1, 0, 15, lcd16x2rgb.eAlign.left, "wird gelesen")
+    basic.pause(5000)
+    qwiicopenlog.readFile(qwiicopenlog.eADDR.LOG_Qwiic, pFilename, 128)
+    lcd16x2rgb.screenClear(lcd16x2rgb.eADDR_LCD.LCD_16x2)
+    lcd16x2rgb.writeLCD(lcd16x2rgb.eADDR_LCD.LCD_16x2, qwiicopenlog.getString(qwiicopenlog.eArray.FileContent).substr(0, 16))
+    lcd16x2rgb.setCursor(lcd16x2rgb.eADDR_LCD.LCD_16x2, 1, 0)
+    lcd16x2rgb.writeLCD(lcd16x2rgb.eADDR_LCD.LCD_16x2, qwiicopenlog.getString(qwiicopenlog.eArray.FileContent).substr(16, 16))
+}
 function zeigeDateiInhalt () {
     lcd16x2rgb.screenClear(lcd16x2rgb.eADDR_LCD.LCD_16x2)
     if (qwiicopenlog.getInt(qwiicopenlog.eArray.FileContent, qwiicopenlog.eInt.Array_Length) > 0) {
@@ -80,7 +107,7 @@ input.onButtonEvent(Button.A, input.buttonEventValue(ButtonEvent.Hold), function
 input.onButtonEvent(Button.B, input.buttonEventValue(ButtonEvent.Hold), function () {
     if (!(input.buttonIsPressed(Button.A))) {
         if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
-        	
+            loescheDateien(10, "REMOVE.LOG")
         } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.dir)) {
             _("Datei lesen und Inhalt in 2 Zeilen (32 Byte) anzeigen, weiter mit B+")
             qwiicopenlog.readFile(qwiicopenlog.eADDR.LOG_Qwiic, qwiicopenlog.getString(qwiicopenlog.eArray.FileName), 260)
@@ -90,6 +117,40 @@ input.onButtonEvent(Button.B, input.buttonEventValue(ButtonEvent.Hold), function
         }
     }
 })
+function loescheDateien (pCount: number, logFilename: string) {
+    // liest pCount Dateinamen nach Muster "LOG00*.TXT" in Array aFileName
+    qwiicopenlog.listDirectory(qwiicopenlog.eADDR.LOG_Qwiic, "LOG00*.TXT", pCount)
+    // Länge des Arrays aFileName=Anzahl Dateinamen fürs Protokoll
+    sText = "" + qwiicopenlog.getInt(qwiicopenlog.eArray.FileName, qwiicopenlog.eInt.Array_Length) + " Dateien"
+    // schreibt sText auf Display Zeile 0 Zeichen 0-9
+    lcd16x2rgb.writeText(lcd16x2rgb.eADDR_LCD.LCD_16x2, 0, 0, 9, lcd16x2rgb.eAlign.left, sText)
+    // schreibt sText in Protokoll-Datei logFilename auf Speicherkarte
+    qwiicopenlog.writeFile(qwiicopenlog.eADDR.LOG_Qwiic, logFilename, sText, qwiicopenlog.eCRLF.CRLF)
+    // Zähler für gelöschte Dateien
+    iCount = 0
+    // Schleife durch alle gefundenen Dateinamen, kann weniger als pCount sein
+    for (let Index = 0; Index <= qwiicopenlog.getInt(qwiicopenlog.eArray.FileName, qwiicopenlog.eInt.Array_Length) - 1; Index++) {
+        // fragt Register 13 fileSize vom aktuellen Dateiname (Array aFileName(iFileName))
+        iSize = qwiicopenlog.readInt32BE(qwiicopenlog.eADDR.LOG_Qwiic, qwiicopenlog.eWriteStringReadInt32BE.fileSize, qwiicopenlog.getString(qwiicopenlog.eArray.FileName))
+        // schreibt iSize auf Display Zeile 0 Zeichen 10-15 rechtsbündig
+        lcd16x2rgb.writeText(lcd16x2rgb.eADDR_LCD.LCD_16x2, 0, 10, 15, lcd16x2rgb.eAlign.right, convertToText(iSize))
+        // schreibt aktuellen Dateiname auf Display Zeile 1 Zeichen 0-15
+        lcd16x2rgb.writeText(lcd16x2rgb.eADDR_LCD.LCD_16x2, 1, 0, 15, lcd16x2rgb.eAlign.left, qwiicopenlog.getString(qwiicopenlog.eArray.FileName))
+        // schreibt aktuellen Dateiname und iSize in Protokoll-Datei logFilename auf Speicherkarte
+        qwiicopenlog.writeFile(qwiicopenlog.eADDR.LOG_Qwiic, logFilename, "" + qwiicopenlog.getString(qwiicopenlog.eArray.FileName) + " " + iSize + " Bytes", qwiicopenlog.eCRLF.CRLF)
+        if (iSize == 0) {
+            // sendet aktuellen Dateiname an Register 15 remove
+            // und bekommt Anzahl gelöschter Dateien zurück, 1 oder 0 wird zum Zähler addiert
+            iCount += qwiicopenlog.readInt32BE(qwiicopenlog.eADDR.LOG_Qwiic, qwiicopenlog.eWriteStringReadInt32BE.remove, qwiicopenlog.getString(qwiicopenlog.eArray.FileName))
+        }
+        basic.pause(1000)
+        qwiicopenlog.changeIndex(qwiicopenlog.eArray.FileName, 1)
+    }
+    // Anzahl gelöschter Dateien fürs Protokoll auf Display und in die Datei auf Speicherkarte
+    sText = "" + iCount + " gelöscht"
+    lcd16x2rgb.writeText(lcd16x2rgb.eADDR_LCD.LCD_16x2, 0, 0, 15, lcd16x2rgb.eAlign.left, sText)
+    qwiicopenlog.writeFile(qwiicopenlog.eADDR.LOG_Qwiic, logFilename, sText, qwiicopenlog.eCRLF.CRLF)
+}
 input.onButtonEvent(Button.AB, input.buttonEventValue(ButtonEvent.Hold), function () {
     if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
     	
@@ -100,6 +161,10 @@ input.onButtonEvent(Button.AB, input.buttonEventValue(ButtonEvent.Hold), functio
     }
 })
 let iRemove = 0
+let iSize = 0
+let iCount = 0
+let sText = ""
+let iSize2 = 0
 lcd16x2rgb.initLCD(lcd16x2rgb.eADDR_LCD.LCD_16x2)
 qwiicopenlog.checkStatusRegister(qwiicopenlog.eADDR.LOG_Qwiic)
 zeigeStatus()
