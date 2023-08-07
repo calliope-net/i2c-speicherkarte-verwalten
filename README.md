@@ -28,7 +28,7 @@ Um dieses Repository in MakeCode zu importieren.
   * *dir*   (Directory von Speicherkarte wurde in internes Array eingelesen)
   * *read*  (Datei-Inhalt wurde in internes Array eingelesen)
   * *write* (Datei wurde auf Speicherkarte geschrieben)
-* von dem Status ist die Funktion von Knopf A und B abhängig
+* der Status bestimmt die Funktion von Knopf A/B
 * im Status *start* 
   * werden 'wildcards' wie \*.* angezeigt für die Verzeichnis Suche
   * **A geklickt** rückwärts (-1)
@@ -58,7 +58,7 @@ Um dieses Repository in MakeCode zu importieren.
   * **B halten** frei
   * **A+B halten** frei
 * im Status *write*
-  * nach dem schreiben auf die Speicherkarte
+  * nach dem Schreiben auf die Speicherkarte
   * **A+B geklickt** Status Wechsel zurück zu → *start*
     * es wird syncFile aufgerufen, zum Entfernen der Speicherkarte
 
