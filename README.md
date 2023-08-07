@@ -4,7 +4,7 @@
 ### i2c Module an Calliope anstecken
 
 * [Grove - 16x2 LCD](https://wiki.seeedstudio.com/Grove-16x2_LCD_Series/)
-* [SparkFun Qwiic OpenLog](https://www.sparkfun.com/products/15164) | [Qwiic Cable - Grove Adapter](https://www.sparkfun.com/products/15109)
+* [SparkFun Qwiic OpenLog](https://www.sparkfun.com/products/15164) / [Qwiic Cable - Grove Adapter](https://www.sparkfun.com/products/15109)
 
 Alle i2c Module werden parallel am linken Grove Steckverbinder A0 angeschlossen. 
 Dazu kann ein [i2c-Hub](https://wiki.seeedstudio.com/Grove-I2C-Hub-6Port/) benutzt werden.
@@ -36,8 +36,8 @@ Um dieses Repository in MakeCode zu importieren.
   * **A+B geklickt** zu dem gewählten Suchmuster passende Datei-Namen einlesen
     * begrenzt auf 20 Dateinamen (kann im Programm geändert werden)
     * Status Wechsel zu → *dir*
-  * **A halten** Testprogramm 'schreibeUmlaute' starten
-  * **B halten** Testprogramm 'loescheDateien' starten
+  * **A halten** Aufruf der Funktion 'schreibeUmlaute'
+  * **B halten** Aufruf der Funktion 'loescheDateien'
   * **A+B halten** frei
 * im Status *dir* (nach **A+B geklickt**)
   * wird jeweils einer der gefundenen Dateinamen angezeigt
@@ -57,42 +57,17 @@ Um dieses Repository in MakeCode zu importieren.
   * **A halten** frei
   * **B halten** frei
   * **A+B halten** frei
+* im Status *write*
+  * nach dem schreiben auf die Speicherkarte
+  * **A+B geklickt** Status Wechsel zurück zu → *start*
+    * es wird syncFile aufgerufen, zum Entfernen der Speicherkarte
 
+> Die Funktion 'schreibeUmlaute' wurde auch mit Blöcken programmiert. Eine vorhandene Datei mit gleichem Name wird gelöscht.
+> Dann werden Umlaute und Sonderzeichen in eine neue Datei geschrieben und wieder gelesen. Die Zeichen werden im LCD Display angezeigt.
 
-
-
-## ---
-* Knopf A geklickt (ändert Index um -1 und zeigt neues Element aus dem Array an)
-  *    start - SeachString -1
-  *    dir     Datei-Name -1
-  *    read    Datei-Inhalt -32
-  *    write   
-* Knopf B geklickt (ändert Index um +1 und zeigt neues Element aus dem Array an)
-  *    start - SeachString +1
-  *    dir     Datei-Name +1
-  *    read    Datei-Inhalt +32
-  *    write   
-* Knopf A+B geklickt (zeigt Dateinamen und kehrt sonst immer zum Anfang zurück)
-  *    start   DIR (list directory)
-  *    dir     zurück zu start
-  *    read    zurück zu start
-  *    write   syncFile (Close), zurück zu start
-  *    ansonsten   zurück zu start (zeigeStatus)
-* Knopf A halten
-  *    start   i2c Beispiele LCD+LOG: 3 Zeilen in Datei "UMLAUTE.TXT" schreiben, lesen und anzeigen
-  *    dir     Dateigröße zum aktuellen Dateiname anzeigen
-  *    -read
-  *    -write
-* Knopf B halten
-  *    start   i2c Beispiele LCD+LOG: lösche 10 leere "LOG*.TXT" Dateien mit Protokoll in "REMOVE.LOG"
-  *    dir     Datei lesen und Inhalt in 2 Zeilen (32 Byte) anzeigen, weiter mit B+
-  *    -read
-  *    -write
-* Knopf A+B halten
-  *    start   i2c Beispiele LCD+PCF+LOG: dauerhaft protokollieren mit Datum und Zeit
-  *    dir     aktuelle Datei löschen
-  *    -read
-  *    -write
+> Die Funktion 'loescheDateien' wurde auch mit Blöcken programmiert. Qwiic OpenLog legt immer neue Dateien LOG*.TXT mit fortlaufender Nummer
+> im Dateiname und ohne Inhalt an. Das Programm listet 10 solche Dateinamen auf, testet ob die Länge = 0 ist, löscht die Datei und schreibt
+> das Ergebnis in eine Protokolldatei REMOVE.LOG auf die Speicherkarte. Der Ablauf wird im LCD Display protokolliert.
 
 ### 3 Erweiterungen werden automatisch mit geladen
 
