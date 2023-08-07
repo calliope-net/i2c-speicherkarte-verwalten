@@ -18,11 +18,50 @@ Um dieses Repository in MakeCode zu importieren.
 * öffne [https://makecode.calliope.cc](https://makecode.calliope.cc)
 * klicke auf **Importieren** und dann auf **Importiere URL**
 * kopiere die folgende **URL des Projekts** in die Zwischenablage
-* **https://github.com/calliope-net/i2c-speicherkarte-verwalten**
+* **calliope-net/i2c-speicherkarte-verwalten**
 * füge sie auf der MakeCode Webseite ein und klicke auf **Los geht's!**
 
 ### Bedienung Calliope: Speicherkarte verwalten
 
+* das Programm hat mehrere Zustände, die wichtigsten sind:
+  * *start* (beim Start wurde eine Speicherkarte erkannt)
+  * *dir*   (Directory von Speicherkarte wurde in internes Array eingelesen)
+  * *read*  (Datei-Inhalt wurde in internes Array eingelesen)
+  * *write* (Datei wurde auf Speicherkarte geschrieben)
+* von dem Status ist die Funktion von Knopf A und B abhängig
+* im Status *start* 
+  * werden 'wildcards' wie \*.* angezeigt für die Verzeichnis Suche
+  * **A geklickt** rückwärts (-1)
+  * **B geklickt** vorwärts (+1)
+  * **A+B geklickt** zu dem gewählten Suchmuster passende Datei-Namen einlesen
+    * begrenzt auf 20 Dateinamen (kann im Programm geändert werden)
+    * Status Wechsel zu → *dir*
+  * **A halten** Testprogramm 'schreibeUmlaute' starten
+  * **B halten** Testprogramm 'loescheDateien' starten
+  * **A+B halten** frei
+* im Status *dir* (nach **A+B geklickt**)
+  * wird jeweils einer der gefundenen Dateinamen angezeigt
+  * **A geklickt** rückwärts (-1)
+  * **B geklickt** vorwärts (+1)
+  * **A+B geklickt** Status Wechsel zurück zu → *start*
+  * **A halten** Dateigröße in Byte ermitteln und anzeigen
+  * **B halten** Datei-Inhalt einlesen und die ersten 32 Zeichen anzeigen
+    * begrenzt auf 260 Byte (kann im Programm geändert werden)
+    * Status Wechsel zu → *read*
+  * **A+B halten** aktuelle Datei löschen
+* im Status *read* (nach **B halten**)
+  * werden jeweils 32 Zeichen der eingelesenen Datei angezeigt
+  * **A geklickt** rückwärts (-32 Zeichen)
+  * **B geklickt** vorwärts (+32 Zeichen)
+  * **A+B geklickt** Status Wechsel zurück zu → *start*
+  * **A halten** frei
+  * **B halten** frei
+  * **A+B halten** frei
+
+
+
+
+## ---
 * Knopf A geklickt (ändert Index um -1 und zeigt neues Element aus dem Array an)
   *    start - SeachString -1
   *    dir     Datei-Name -1
