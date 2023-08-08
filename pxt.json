@@ -5,7 +5,7 @@
         "core": "*",
         "lcd-16x2rgb": "github:calliope-net/lcd-16x2rgb#v1.0.0",
         "bit": "github:calliope-net/bit#v1.0.0",
-        "log-qwiicopenlog": "github:calliope-net/log-qwiicopenlog#v1.0.0"
+        "log-qwiicopenlog": "github:calliope-net/log-qwiicopenlog#v1.0.1"
     },
     "files": [
         "main.blocks",
