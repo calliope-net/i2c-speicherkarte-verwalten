@@ -1,7 +1,7 @@
 
 > Diese Seite bei [https://calliope-net.github.io/i2c-speicherkarte-verwalten/](https://calliope-net.github.io/i2c-speicherkarte-verwalten/) öffnen
 
-![](sp2-460.jpg)
+![](speicherkarte-verwalten-460.jpg)
 
 ### i2c Module an Calliope anstecken
 
