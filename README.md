@@ -47,19 +47,20 @@ Um dieses Repository in MakeCode zu importieren.
   * **A halten** Dateigröße in Byte ermitteln und anzeigen
   * **B halten** aktuelle Datei löschen
   * **A+B halten** Datei-Inhalt einlesen und die ersten 32 Zeichen anzeigen
-    * begrenzt auf 260 Byte (kann im Programm geändert werden)
+    * begrenzt auf 160 Byte (kann im Programm geändert werden)
     * Status Wechsel zu → *read*
 * im Status *read* (nach **A+B halten** RGB-LED rot)
   * werden jeweils 32 Zeichen der eingelesenen Datei angezeigt
   * **A geklickt** rückwärts (-32 Zeichen)
   * **B geklickt** vorwärts (+32 Zeichen)
   * **A+B geklickt** Status Wechsel zurück zu → *start*
-  * **A halten** frei
-  * **B halten** frei
+  * **A halten** Dateigröße in Byte ermitteln und anzeigen
+  * **B halten** aktuelle Datei löschen
   * **A+B halten** frei
 * im Status *write*
   * nach dem Schreiben auf die Speicherkarte
   * **A+B geklickt** Status Wechsel zurück zu → *start*
+  * **A+B halten** Status Wechsel zurück zu → *start*
     * es wird syncFile aufgerufen, zum Entfernen der Speicherkarte
 
 > Die Funktion 'schreibeUmlaute' wurde mit Blöcken programmiert. Eine vorhandene Datei mit gleichem Name wird gelöscht.
