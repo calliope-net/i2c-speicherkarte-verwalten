@@ -29,7 +29,7 @@ Um dieses Repository in MakeCode zu importieren.
   * *read*  (Datei-Inhalt wurde in internes Array eingelesen)
   * *write* (Datei wurde auf Speicherkarte geschrieben)
 * der Status bestimmt die Funktion von Knopf A/B
-* im Status *start* 
+* im Status *start* (RGB-LED blau)
   * werden 'wildcards' wie \*.* angezeigt für die Verzeichnis Suche
   * **A geklickt** rückwärts (-1)
   * **B geklickt** vorwärts (+1)
@@ -37,19 +37,19 @@ Um dieses Repository in MakeCode zu importieren.
     * begrenzt auf 20 Dateinamen (kann im Programm geändert werden)
     * Status Wechsel zu → *dir*
   * **A halten** Aufruf der Funktion 'schreibeUmlaute'
-  * **B halten** Aufruf der Funktion 'loescheDateien'
-  * **A+B halten** frei
-* im Status *dir* (nach **A+B geklickt**)
+  * **B halten** Aufruf der Funktion 'schreibeZeilen'
+  * **A+B halten** Aufruf der Funktion 'loescheDateien'
+* im Status *dir* (nach **A+B geklickt** RGB-LED grün)
   * wird jeweils einer der gefundenen Dateinamen angezeigt
   * **A geklickt** rückwärts (-1)
   * **B geklickt** vorwärts (+1)
   * **A+B geklickt** Status Wechsel zurück zu → *start*
   * **A halten** Dateigröße in Byte ermitteln und anzeigen
-  * **B halten** Datei-Inhalt einlesen und die ersten 32 Zeichen anzeigen
+  * **B halten** aktuelle Datei löschen
+  * **A+B halten** Datei-Inhalt einlesen und die ersten 32 Zeichen anzeigen
     * begrenzt auf 260 Byte (kann im Programm geändert werden)
     * Status Wechsel zu → *read*
-  * **A+B halten** aktuelle Datei löschen
-* im Status *read* (nach **B halten**)
+* im Status *read* (nach **A+B halten** RGB-LED rot)
   * werden jeweils 32 Zeichen der eingelesenen Datei angezeigt
   * **A geklickt** rückwärts (-32 Zeichen)
   * **B geklickt** vorwärts (+32 Zeichen)
@@ -62,10 +62,13 @@ Um dieses Repository in MakeCode zu importieren.
   * **A+B geklickt** Status Wechsel zurück zu → *start*
     * es wird syncFile aufgerufen, zum Entfernen der Speicherkarte
 
-> Die Funktion 'schreibeUmlaute' wurde auch mit Blöcken programmiert. Eine vorhandene Datei mit gleichem Name wird gelöscht.
-> Dann werden Umlaute und Sonderzeichen in eine neue Datei geschrieben und wieder gelesen. Die Zeichen werden im LCD Display angezeigt.
+> Die Funktion 'schreibeUmlaute' wurde mit Blöcken programmiert. Eine vorhandene Datei mit gleichem Name wird gelöscht.
+> Dann werden Umlaute und Sonderzeichen in eine neue Datei UMLAUTE.TXT geschrieben und wieder gelesen. Die Zeichen werden im LCD Display angezeigt.
 
-> Die Funktion 'loescheDateien' wurde auch mit Blöcken programmiert. Qwiic OpenLog legt immer neue Dateien LOG*.TXT mit fortlaufender Nummer
+> Die Funktion 'schreibeZeilen' ist ein fertiger Block in LOG. In die Datei ASCII94.LOG werden Zeilen verschiedener Länge 0 bis 94 Zeichen
+> geschrieben, um die automatische Aufteilung in Blöcke zu 31 Byte zu testen. Diese Datei wird nicht gelesen.
+
+> Die Funktion 'loescheDateien' wurde mit Blöcken programmiert. Qwiic OpenLog legt immer neue Dateien LOG*.TXT mit fortlaufender Nummer
 > im Dateiname und ohne Inhalt an. Das Programm listet 10 solche Dateinamen auf, testet ob die Länge = 0 ist, löscht die Datei und schreibt
 > das Ergebnis in eine Protokolldatei REMOVE.LOG auf die Speicherkarte. Der Ablauf wird im LCD Display protokolliert.
 
