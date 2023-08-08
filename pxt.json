@@ -1,6 +1,6 @@
 {
     "name": "i2c-speicherkarte-verwalten",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "dependencies": {
         "core": "*",
         "lcd-16x2rgb": "github:calliope-net/lcd-16x2rgb#v1.0.0",
