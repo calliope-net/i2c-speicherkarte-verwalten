@@ -81,7 +81,9 @@ Um dieses Repository in MakeCode zu importieren.
 > im Dateiname und ohne Inhalt an. Das Programm listet 10 solche Dateinamen auf, testet ob die Länge = 0 ist, löscht die Datei und schreibt
 > das Ergebnis in eine Protokolldatei REMOVE.LOG auf die Speicherkarte. Der Ablauf wird im LCD Display protokolliert.
 
-### 3 Erweiterungen werden automatisch mit geladen
+### Erweiterungen
+
+alle Erweiterungen (Software) werden automatisch von GitHub geladen
 
 * [https://github.com/calliope-net/bit](https://calliope-net.github.io/bit/)
 * [https://github.com/calliope-net/lcd-16x2rgb](https://calliope-net.github.io/lcd-16x2rgb/)
@@ -94,10 +96,16 @@ Um dieses Repository in MakeCode zu importieren.
 > vor einem Mülleimer- und einem Pfeil-Symbol. Mit dem Mülleimer wird die Erweiterung gelöscht,
 > mit dem runden Pfeil nach einem Update gesucht. Danach steht dort eine Versionsnummer.
 
-### Programmier-Beispiele, i2c-Module, Bilder, Bezugsquellen:
-* [Calliope i2c Demo-Projekt mit vier i2c Modulen gleichzeitig, mit DIP-Schalter.](https://calliope-net.github.io/i2c-test/)
-* [Quarz-Uhr anzeigen, stellen mit Knopf A/B, Korrektur-Register, Binär-Uhr.](https://calliope-net.github.io/i2c-uhr-stellen/)
-* [Dateien der Speicherkarte anzeigen, lesen, schreiben, löschen, mit Knopf A/B.](https://calliope-net.github.io/i2c-speicherkarte-verwalten/)
+### Calliope-Apps, .hex-Dateien, Bildschirmfotos mit Blöcken
+
+* [Calliope-App mit vier i2c Modulen gleichzeitig, DIP-Schalter, Speicherkarte, LCD-Display, Uhr.](https://calliope-net.github.io/i2c-test/)
+* [Calliope-App Quarz-Uhr anzeigen, stellen mit Knopf A/B, Korrektur-Register, Binär-Uhr.](https://calliope-net.github.io/i2c-uhr-stellen/)
+* [Calliope-App Dateien der Speicherkarte anzeigen, lesen, schreiben, löschen, mit Knopf A/B.](https://calliope-net.github.io/i2c-speicherkarte-verwalten/)
+
+### Material
+
+* [i2c-Erweiterungen für MakeCode (Software)](https://calliope-net.github.io/i2c-test#erweiterungen)
+* [i2c-Module und Bezugsquellen (Hardware)](https://calliope-net.github.io/i2c-test#bezugsquellen)
 
 #### Metadaten (verwendet für Suche, Rendering)
 
