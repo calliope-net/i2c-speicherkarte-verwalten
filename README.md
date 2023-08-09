@@ -10,10 +10,16 @@
 
 Alle i2c Module werden parallel am linken Grove Steckverbinder A0 angeschlossen. 
 Dazu kann ein [i2c-Hub](https://wiki.seeedstudio.com/Grove-I2C-Hub-6Port/) benutzt werden.
+i2c Module mit zwei Buchsen (z.B. Qwiic) können hintereinander gesteckt werden.
 
 Für die Stromversorgung sollte Calliope über USB Kabel (an Computer oder Powerbank) angeschlossen sein.
 
-### Dieses Projekt importieren, mit Calliope testen, bearbeiten.
+### .hex-Datei direkt auf Calliope laden, oder in MakeCode importieren.
+
+* [mini-i2c-speicherkarte-verwalten.hex](mini-i2c-speicherkarte-verwalten.hex)
+* [Schnappschuss (Bildschirmfoto mit den Blöcken)](mini-i2c-speicherkarte-verwalten.png)
+
+### Dieses Projekt von GitHub importieren, bearbeiten, mit Calliope testen.
 
 Um dieses Repository in MakeCode zu importieren.
 
@@ -23,7 +29,7 @@ Um dieses Repository in MakeCode zu importieren.
 * **calliope-net/i2c-speicherkarte-verwalten**
 * füge sie auf der MakeCode Webseite ein und klicke auf **Los geht's!**
 
-### Bedienung Calliope: Speicherkarte verwalten
+### Bedienung der 'Calliope-App': Speicherkarte verwalten
 
 * das Programm hat mehrere Zustände, die wichtigsten sind:
   * *start* (beim Start wurde eine Speicherkarte erkannt)
