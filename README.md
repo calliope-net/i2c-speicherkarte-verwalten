@@ -1,9 +1,9 @@
 
-> Diese Seite bei [https://calliope-net.github.io/i2c-speicherkarte-verwalten/](https://calliope-net.github.io/i2c-speicherkarte-verwalten/) öffnen
+Diese Seite bei [https://calliope-net.github.io/i2c-speicherkarte-verwalten/](https://calliope-net.github.io/i2c-speicherkarte-verwalten/) öffnen.
 
 ![](speicherkarte-verwalten-460.jpg)
 
-### i2c Module an Calliope anstecken
+### i2c Module an Calliope anstecken.
 
 * [Grove - 16x2 LCD](https://wiki.seeedstudio.com/Grove-16x2_LCD_Series/)
 * [SparkFun Qwiic OpenLog](https://www.sparkfun.com/products/15164) / [Qwiic Cable - Grove Adapter](https://www.sparkfun.com/products/15109)
@@ -11,15 +11,14 @@
 Alle i2c Module werden parallel am linken Grove Steckverbinder A0 angeschlossen. 
 Dazu kann ein [i2c-Hub](https://wiki.seeedstudio.com/Grove-I2C-Hub-6Port/) benutzt werden.
 i2c Module mit zwei Buchsen (z.B. Qwiic) können hintereinander gesteckt werden.
-
 Für die Stromversorgung sollte Calliope über USB Kabel (an Computer oder Powerbank) angeschlossen sein.
 
-### .hex-Datei direkt auf Calliope laden, oder in MakeCode importieren.
+#### .hex-Datei direkt auf Calliope laden, oder in MakeCode importieren.
 
 * [mini-i2c-speicherkarte-verwalten.hex](mini-i2c-speicherkarte-verwalten.hex)
 * [Schnappschuss (Bildschirmfoto mit den Blöcken)](mini-i2c-speicherkarte-verwalten.png)
 
-### Dieses Projekt von GitHub importieren, bearbeiten, mit Calliope testen.
+#### Dieses Projekt von GitHub importieren, bearbeiten, mit Calliope testen.
 
 Um dieses Repository in MakeCode zu importieren.
 
@@ -29,7 +28,7 @@ Um dieses Repository in MakeCode zu importieren.
 * **calliope-net/i2c-speicherkarte-verwalten**
 * füge sie auf der MakeCode Webseite ein (Strg-V) und klicke auf **Los geht's!**
 
-### Bedienung der 'Calliope-App': Speicherkarte verwalten
+### Bedienung der Calliope-App 'Speicherkarte verwalten'
 
 * das Programm hat mehrere Zustände, die wichtigsten sind:
   * *start* (beim Start wurde eine Speicherkarte erkannt)
@@ -71,41 +70,37 @@ Um dieses Repository in MakeCode zu importieren.
   * **A+B halten** Status Wechsel zurück zu → *start*
     * es wird syncFile aufgerufen, zum Entfernen der Speicherkarte
 
-> Die Funktion 'schreibeUmlaute' wurde mit Blöcken programmiert. Eine vorhandene Datei mit gleichem Name wird gelöscht.
-> Dann werden Umlaute und Sonderzeichen in eine neue Datei UMLAUTE.TXT geschrieben und wieder gelesen. Die Zeichen werden im LCD Display angezeigt.
+Die Funktion 'schreibeUmlaute' wurde mit Blöcken programmiert. Eine vorhandene Datei mit gleichem Name wird gelöscht.
+Dann werden Umlaute und Sonderzeichen in eine neue Datei UMLAUTE.TXT geschrieben und wieder gelesen. Die Zeichen werden im LCD Display angezeigt.
 
-> Die Funktion 'schreibeZeilen' ist ein fertiger Block in LOG. In die Datei ASCII94.LOG werden Zeilen verschiedener Länge 0 bis 94 Zeichen
-> geschrieben, um die automatische Aufteilung in Blöcke zu 31 Byte zu testen. Diese Datei wird nicht gelesen.
+Die Funktion 'schreibeZeilen' ist ein fertiger Block in LOG. In die Datei ASCII94.LOG werden Zeilen verschiedener Länge 0 bis 94 Zeichen
+geschrieben, um die automatische Aufteilung in Blöcke zu 31 Byte zu testen. Diese Datei wird nicht gelesen.
 
-> Die Funktion 'loescheDateien' wurde mit Blöcken programmiert. Qwiic OpenLog legt immer neue Dateien LOG*.TXT mit fortlaufender Nummer
-> im Dateiname und ohne Inhalt an. Das Programm listet 10 solche Dateinamen auf, testet ob die Länge = 0 ist, löscht die Datei und schreibt
-> das Ergebnis in eine Protokolldatei REMOVE.LOG auf die Speicherkarte. Der Ablauf wird im LCD Display protokolliert.
+Die Funktion 'loescheDateien' wurde mit Blöcken programmiert. Qwiic OpenLog legt immer neue Dateien LOG*.TXT mit fortlaufender Nummer
+im Dateiname und ohne Inhalt an. Das Programm listet 10 solche Dateinamen auf, testet ob die Länge = 0 ist, löscht die Datei und schreibt
+das Ergebnis in eine Protokolldatei REMOVE.LOG auf die Speicherkarte. Der Ablauf wird im LCD Display protokolliert.
 
 ### Erweiterungen
 
-alle Erweiterungen (Software) werden automatisch von GitHub geladen
+Die Calliope-App 'Speicherkarte verwalten' lädt folgende Erweiterungen:
 
 * [https://github.com/calliope-net/bit](https://calliope-net.github.io/bit/)
 * [https://github.com/calliope-net/lcd-16x2rgb](https://calliope-net.github.io/lcd-16x2rgb/)
 * [https://github.com/calliope-net/log-qwiicopenlog](https://calliope-net.github.io/log-qwiicopenlog/)
 
-### Updates
+> [Upates für Erweiterungen; Erweiterungen aus einem Projekt löschen.](https://calliope-net.github.io/i2c-test#updates)
 
-> Um ein Update einer Erweiterung von GitHub zu laden, klicke in der JavaScript Ansicht
-> links unter dem Simulator auf den schwarzen Explorer. Dort steht der Name der Erweiterung
-> vor einem Mülleimer- und einem Pfeil-Symbol. Mit dem Mülleimer wird die Erweiterung gelöscht,
-> mit dem runden Pfeil nach einem Update gesucht. Danach steht dort eine Versionsnummer.
+> [Alle i2c-Erweiterungen für MakeCode von calliope-net (Software).](https://calliope-net.github.io/i2c-test#erweiterungen)
 
-### Calliope-Apps, .hex-Dateien, Bildschirmfotos mit Blöcken
+#### Calliope-Apps, .hex-Dateien, Bildschirmfotos mit Blöcken
 
-* [Calliope-App mit vier i2c Modulen gleichzeitig, DIP-Schalter, Speicherkarte, LCD-Display, Uhr.](https://calliope-net.github.io/i2c-test/)
-* [Calliope-App Quarz-Uhr anzeigen, stellen mit Knopf A/B, Korrektur-Register, Binär-Uhr.](https://calliope-net.github.io/i2c-uhr-stellen/)
-* [Calliope-App Dateien der Speicherkarte anzeigen, lesen, schreiben, löschen, mit Knopf A/B.](https://calliope-net.github.io/i2c-speicherkarte-verwalten/)
+> [Alle Beispiel-Projekte für MakeCode von calliope-net (Calliope-Apps).](https://calliope-net.github.io/i2c-test#programmierbeispiele)
 
-### Material
+> GitHub-Profil calliope-net: [https://github.com/calliope-net](https://github.com/calliope-net)
 
-* [i2c-Erweiterungen für MakeCode (Software)](https://calliope-net.github.io/i2c-test#erweiterungen)
-* [i2c-Module und Bezugsquellen (Hardware)](https://calliope-net.github.io/i2c-test#bezugsquellen)
+### Bezugsquellen
+
+> [Alle i2c-Module und Bezugsquellen (Hardware).](https://calliope-net.github.io/i2c-test#bezugsquellen)
 
 #### Metadaten (verwendet für Suche, Rendering)
 
