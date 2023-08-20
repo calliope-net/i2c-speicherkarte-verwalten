@@ -13,7 +13,6 @@ Kabel und Adapter
 * [Qwiic Cable - Grove Adapter](https://www.sparkfun.com/products/15109) (2 Stück)
 
 Alle i2c Module werden parallel am linken Grove Steckverbinder A0 angeschlossen. 
-Dazu kann ein [i2c-Hub](https://wiki.seeedstudio.com/Grove-I2C-Hub-6Port/) benutzt werden.
 i2c Module mit zwei Buchsen (z.B. Qwiic) können hintereinander gesteckt werden.
 Für die Stromversorgung sollte Calliope über USB Kabel (an Computer oder Powerbank) angeschlossen sein.
 
