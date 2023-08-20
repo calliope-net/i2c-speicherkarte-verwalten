@@ -6,7 +6,11 @@ Diese Seite bei [https://calliope-net.github.io/i2c-speicherkarte-verwalten/](ht
 ### i2c Module an Calliope anstecken.
 
 * [Grove - 16x2 LCD](https://wiki.seeedstudio.com/Grove-16x2_LCD_Series/)
-* [SparkFun Qwiic OpenLog](https://www.sparkfun.com/products/15164) / [Qwiic Cable - Grove Adapter](https://www.sparkfun.com/products/15109)
+* [SparkFun Qwiic OpenLog](https://www.sparkfun.com/products/15164)
+
+Kabel und Adapter
+
+* [Qwiic Cable - Grove Adapter](https://www.sparkfun.com/products/15109) (2 Stück)
 
 Alle i2c Module werden parallel am linken Grove Steckverbinder A0 angeschlossen. 
 Dazu kann ein [i2c-Hub](https://wiki.seeedstudio.com/Grove-I2C-Hub-6Port/) benutzt werden.
