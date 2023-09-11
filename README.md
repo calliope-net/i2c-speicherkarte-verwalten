@@ -14,6 +14,7 @@ Kabel und Adapter
 
 Alle i2c Module werden parallel am linken Grove Steckverbinder A0 angeschlossen. 
 i2c Module mit zwei Buchsen (z.B. Qwiic) können hintereinander gesteckt werden.
+
 Für die Stromversorgung sollte Calliope über USB Kabel (an Computer oder Powerbank) angeschlossen sein.
 
 #### .hex-Datei direkt auf Calliope laden, oder in MakeCode importieren.
