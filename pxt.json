@@ -3,9 +3,9 @@
     "version": "1.0.2",
     "dependencies": {
         "core": "*",
-        "lcd-16x2rgb": "github:calliope-net/lcd-16x2rgb#v1.0.0",
-        "bit": "github:calliope-net/bit#v1.0.0",
-        "log-qwiicopenlog": "github:calliope-net/log-qwiicopenlog#v1.0.1"
+        "lcd-16x2rgb": "github:calliope-net/lcd-16x2rgb#v1.0.2",
+        "bit": "github:calliope-net/bit#v1.0.6",
+        "log-qwiicopenlog": "github:calliope-net/log-qwiicopenlog#v1.0.4"
     },
     "files": [
         "main.blocks",
@@ -16,7 +16,7 @@
         "test.ts"
     ],
     "targetVersions": {
-        "target": "4.0.35",
+        "target": "4.0.29",
         "targetId": "calliopemini"
     },
     "supportedTargets": [

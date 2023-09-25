@@ -40,7 +40,7 @@ function zeigeSearchString () {
     lcd16x2rgb.writeText(lcd16x2rgb.eADDR_LCD.LCD_16x2, 1, 3, 12, lcd16x2rgb.eAlign.left, qwiicopenlog.getString(qwiicopenlog.eArray.SearchString))
     lcd16x2rgb.setCursorCB(lcd16x2rgb.eADDR_LCD.LCD_16x2, 1, 3, lcd16x2rgb.eONOFF.ON, lcd16x2rgb.eONOFF.OFF)
 }
-input.onButtonEvent(Button.A, input.buttonEventValue(ButtonEvent.Click), function () {
+input.onButtonEvent(Button.A, ButtonEvent.Click, function () {
     if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
         qwiicopenlog.changeIndex(qwiicopenlog.eArray.SearchString, -1)
         zeigeSearchString()
@@ -94,7 +94,7 @@ function zeigeStatus () {
         lcd16x2rgb.setCursorCB(lcd16x2rgb.eADDR_LCD.LCD_16x2, 1, 3, lcd16x2rgb.eONOFF.ON, lcd16x2rgb.eONOFF.ON)
     }
 }
-input.onButtonEvent(Button.B, input.buttonEventValue(ButtonEvent.Click), function () {
+input.onButtonEvent(Button.B, ButtonEvent.Click, function () {
     if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
         qwiicopenlog.changeIndex(qwiicopenlog.eArray.SearchString, 1)
         zeigeSearchString()
@@ -109,7 +109,7 @@ input.onButtonEvent(Button.B, input.buttonEventValue(ButtonEvent.Click), functio
 function _ (Kommentar: string) {
 	
 }
-input.onButtonEvent(Button.A, input.buttonEventValue(ButtonEvent.Hold), function () {
+input.onButtonEvent(Button.A, ButtonEvent.Hold, function () {
     if (!(input.buttonIsPressed(Button.B))) {
         if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
             schreibeUmlaute("UMLAUTE.TXT")
@@ -122,7 +122,7 @@ input.onButtonEvent(Button.A, input.buttonEventValue(ButtonEvent.Hold), function
         }
     }
 })
-input.onButtonEvent(Button.B, input.buttonEventValue(ButtonEvent.Hold), function () {
+input.onButtonEvent(Button.B, ButtonEvent.Hold, function () {
     if (!(input.buttonIsPressed(Button.A))) {
         if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
             schreibeZeilen("ASCII94.LOG")
@@ -171,7 +171,7 @@ function loescheDateien (pCount: number, logFilename: string) {
     lcd16x2rgb.writeText(lcd16x2rgb.eADDR_LCD.LCD_16x2, 0, 0, 15, lcd16x2rgb.eAlign.left, sText)
     qwiicopenlog.writeFile(qwiicopenlog.eADDR.LOG_Qwiic, logFilename, sText, qwiicopenlog.eCRLF.CRLF)
 }
-input.onButtonEvent(Button.AB, input.buttonEventValue(ButtonEvent.Hold), function () {
+input.onButtonEvent(Button.AB, ButtonEvent.Hold, function () {
     if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
         loescheDateien(10, "REMOVE.LOG")
     } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.dir)) {
