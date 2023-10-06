@@ -18,7 +18,9 @@ function zeigeDateiInhalt () {
     }
 }
 function zeigeSearchString () {
-	
+    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 2, 8, lcd16x2rgb.lcd16x2_text("" + qwiicopenlog.getInt(qwiicopenlog.eArray.SearchString, qwiicopenlog.eInt.Index) + "/" + qwiicopenlog.getInt(qwiicopenlog.eArray.SearchString, qwiicopenlog.eInt.Array_Length)))
+    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 1, 3, 12, lcd16x2rgb.lcd16x2_text(qwiicopenlog.getString(qwiicopenlog.eArray.SearchString)))
+    lcd16x2rgb.setCursorCB(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 1, 3, true)
 }
 input.onButtonEvent(Button.A, ButtonEvent.Click, function () {
     if (true) {
@@ -44,17 +46,22 @@ input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
     }
 })
 function zeigeStatus () {
-    if (true) {
-    	
+    if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.error_SD)) {
+        lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 0, 2, lcd16x2rgb.lcd16x2_text(bit.formatNumber(qwiicopenlog.readRegister(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), qwiicopenlog.eReadRegister.status), bit.eLength.HEX_FF)))
+        lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 3, 15, lcd16x2rgb.lcd16x2_text("Speicherkarte"))
     } else {
-        if (true) {
+        if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
             basic.setLedColor(basic.rgb(0, 0, 7))
-        } else if (true) {
+        } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.dir)) {
             basic.setLedColor(basic.rgb(0, 7, 0))
         }
     }
-    if (true) {
-    	
+    if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
+        lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 2, 4, lcd16x2rgb.lcd16x2_text(bit.formatNumber(qwiicopenlog.readRegister(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), qwiicopenlog.eReadRegister.status), bit.eLength.HEX_FF)))
+        lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 5, 15, lcd16x2rgb.lcd16x2_text("" + qwiicopenlog.readRegister(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), qwiicopenlog.eReadRegister.firmwareMajor) + "." + qwiicopenlog.readRegister(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), qwiicopenlog.eReadRegister.firmwareMinor) + " DIR A+B"))
+        lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 1, 0, 15, lcd16x2rgb.lcd16x2_text("-A            B+"))
+        lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 1, 3, 12, lcd16x2rgb.lcd16x2_text(qwiicopenlog.getString(qwiicopenlog.eArray.SearchString)))
+        lcd16x2rgb.setCursorCB(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 1, 3, true, true)
     }
 }
 input.onButtonEvent(Button.B, ButtonEvent.Click, function () {
@@ -127,4 +134,6 @@ let iCount = 0
 let sText = ""
 let iRemove = 0
 let iSize = 0
+lcd16x2rgb.initLCD(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2))
+qwiicopenlog.checkStatusRegister(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A))
 zeigeStatus()
