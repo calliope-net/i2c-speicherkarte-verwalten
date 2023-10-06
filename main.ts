@@ -1,14 +1,29 @@
 function schreibeUmlaute (pFilename: string) {
-    iSize = 0
+    lcd16x2rgb.clearScreen(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2))
+    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 0, 15, lcd16x2rgb.lcd16x2_text(pFilename))
+    iSize = qwiicopenlog.readInt32BE(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), qwiicopenlog.eWriteStringReadInt32BE.fileSize, pFilename)
     basic.pause(5000)
     if (iSize < 0) {
-    	
+        lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 1, 0, 15, lcd16x2rgb.lcd16x2_text("nicht gefunden"))
     } else if (iSize > 0) {
+        lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 0, 15, lcd16x2rgb.lcd16x2_text("Datei Größe " + iSize))
+        lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 1, 0, 15, lcd16x2rgb.lcd16x2_text("wird gelöscht"))
         basic.pause(5000)
-        iSize = 0
+        iSize = qwiicopenlog.readInt32BE(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), qwiicopenlog.eWriteStringReadInt32BE.remove, pFilename)
+        lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 1, 0, 15, lcd16x2rgb.lcd16x2_text("gelöscht " + iSize))
     }
-    iSize = 0
+    qwiicopenlog.writeFile(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), pFilename, "äöüßÄÖÜ", qwiicopenlog.eCRLF.CRLF)
+    qwiicopenlog.writeFile(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), pFilename, "gjpqy", qwiicopenlog.eCRLF.CRLF)
+    qwiicopenlog.writeFile(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), pFilename, "~ 1€ 2µF -3°C", qwiicopenlog.eCRLF.CRLF)
+    iSize = qwiicopenlog.readInt32BE(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), qwiicopenlog.eWriteStringReadInt32BE.fileSize, pFilename)
+    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 0, 15, lcd16x2rgb.lcd16x2_text("neue Datei " + iSize))
+    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 1, 0, 15, lcd16x2rgb.lcd16x2_text("wird gelesen"))
     basic.pause(5000)
+    qwiicopenlog.readFile(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), pFilename, 128)
+    lcd16x2rgb.clearScreen(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2))
+    lcd16x2rgb.writeLCD(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), lcd16x2rgb.lcd16x2_text(qwiicopenlog.getString(qwiicopenlog.eArray.FileContent).substr(0, 16)))
+    lcd16x2rgb.setCursor(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 1, 0)
+    lcd16x2rgb.writeLCD(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), lcd16x2rgb.lcd16x2_text(qwiicopenlog.getString(qwiicopenlog.eArray.FileContent).substr(16, 16)))
 }
 function zeigeDateiInhalt () {
     lcd16x2rgb.clearScreen(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2))
@@ -38,7 +53,10 @@ input.onButtonEvent(Button.A, ButtonEvent.Click, function () {
     }
 })
 function schreibeZeilen (pFilename: string) {
-    iSize = 0
+    qwiicopenlog.testWrite(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), pFilename)
+    iSize = qwiicopenlog.readInt32BE(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), qwiicopenlog.eWriteStringReadInt32BE.fileSize, pFilename)
+    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 0, 15, lcd16x2rgb.lcd16x2_text("Datei Größe " + iSize))
+    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 1, 0, 15, lcd16x2rgb.lcd16x2_text(pFilename))
 }
 function zeigeDateiName () {
     lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 2, 15, lcd16x2rgb.lcd16x2_text("" + qwiicopenlog.getInt(qwiicopenlog.eArray.FileName, qwiicopenlog.eInt.Index) + "/" + qwiicopenlog.getInt(qwiicopenlog.eArray.FileName, qwiicopenlog.eInt.Array_Length) + " " + qwiicopenlog.getString(qwiicopenlog.eArray.SearchString)))
