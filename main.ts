@@ -79,6 +79,7 @@ function zeigeStatus () {
         lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 0, 2, lcd16x2rgb.lcd16x2_text(bit.formatNumber(qwiicopenlog.readRegister(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), qwiicopenlog.eReadRegister.status), bit.eLength.HEX_FF)))
         lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 3, 15, lcd16x2rgb.lcd16x2_text("Speicherkarte"))
     } else {
+        lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 0, 1, lcd16x2rgb.lcd16x2_text(bit.formatNumber(qwiicopenlog.getStatus(), bit.eLength.HEX_F)))
         if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
             basic.setLedColor(basic.rgb(0, 0, 7))
         } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.dir)) {
