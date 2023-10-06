@@ -168,7 +168,7 @@ function loescheDateien (pCount: number, logFilename: string) {
 input.onButtonEvent(Button.AB, ButtonEvent.Hold, function () {
     if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
         loescheDateien(10, "REMOVE.LOG")
-    } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
+    } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.dir)) {
         _("Datei lesen und Inhalt in 2 Zeilen (32 Byte) anzeigen, weiter mit B+")
         basic.setLedColor(basic.rgb(7, 0, 0))
         qwiicopenlog.readFile(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), qwiicopenlog.getString(qwiicopenlog.eArray.FileName), 160)
