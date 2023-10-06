@@ -11,10 +11,13 @@ function schreibeUmlaute (pFilename: string) {
     basic.pause(5000)
 }
 function zeigeDateiInhalt () {
-    if (0 > 0) {
-    	
+    lcd16x2rgb.clearScreen(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2))
+    if (qwiicopenlog.getInt(qwiicopenlog.eArray.FileContent, qwiicopenlog.eInt.Array_Length) > 0) {
+        lcd16x2rgb.writeLCD(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), lcd16x2rgb.lcd16x2_text(qwiicopenlog.getString(qwiicopenlog.eArray.FileContent).substr(0, 16)))
+        lcd16x2rgb.setCursorCB(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 1, 0, false)
+        lcd16x2rgb.writeLCD(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), lcd16x2rgb.lcd16x2_text(qwiicopenlog.getString(qwiicopenlog.eArray.FileContent).substr(16, 16)))
     } else {
-    	
+        lcd16x2rgb.writeLCD(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), lcd16x2rgb.lcd16x2_text("Datei leer"))
     }
 }
 function zeigeSearchString () {
@@ -23,11 +26,14 @@ function zeigeSearchString () {
     lcd16x2rgb.setCursorCB(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 1, 3, true)
 }
 input.onButtonEvent(Button.A, ButtonEvent.Click, function () {
-    if (true) {
+    if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
+        qwiicopenlog.changeIndex(qwiicopenlog.eArray.SearchString, -1)
         zeigeSearchString()
-    } else if (true) {
+    } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.dir)) {
+        qwiicopenlog.changeIndex(qwiicopenlog.eArray.FileName, -1)
         zeigeDateiName()
-    } else if (true) {
+    } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.read)) {
+        qwiicopenlog.changeIndex(qwiicopenlog.eArray.FileContent, -1)
         zeigeDateiInhalt()
     }
 })
@@ -35,13 +41,18 @@ function schreibeZeilen (pFilename: string) {
     iSize = 0
 }
 function zeigeDateiName () {
+    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 2, 15, lcd16x2rgb.lcd16x2_text("" + qwiicopenlog.getInt(qwiicopenlog.eArray.FileName, qwiicopenlog.eInt.Index) + "/" + qwiicopenlog.getInt(qwiicopenlog.eArray.FileName, qwiicopenlog.eInt.Array_Length) + " " + qwiicopenlog.getString(qwiicopenlog.eArray.SearchString)))
+    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 1, 0, 15, lcd16x2rgb.lcd16x2_text(qwiicopenlog.getString(qwiicopenlog.eArray.FileName)))
     zeigeStatus()
+    lcd16x2rgb.setCursorCB(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 2, true)
 }
 input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
-    if (true) {
+    if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
+        qwiicopenlog.listDirectory(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), qwiicopenlog.getString(qwiicopenlog.eArray.SearchString), 20)
         zeigeDateiName()
     } else {
         _("zurück zu Status 2 start")
+        qwiicopenlog.checkStatusRegister(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A))
         zeigeStatus()
     }
 })
@@ -65,11 +76,14 @@ function zeigeStatus () {
     }
 }
 input.onButtonEvent(Button.B, ButtonEvent.Click, function () {
-    if (true) {
+    if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
+        qwiicopenlog.changeIndex(qwiicopenlog.eArray.SearchString, 1)
         zeigeSearchString()
-    } else if (true) {
+    } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.dir)) {
+        qwiicopenlog.changeIndex(qwiicopenlog.eArray.FileName, 1)
         zeigeDateiName()
-    } else if (true) {
+    } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.read)) {
+        qwiicopenlog.changeIndex(qwiicopenlog.eArray.FileContent, 1)
         zeigeDateiInhalt()
     }
 })
@@ -78,12 +92,14 @@ function _ (Kommentar: string) {
 }
 input.onButtonEvent(Button.A, ButtonEvent.Hold, function () {
     if (!(input.buttonIsPressed(Button.B))) {
-        if (true) {
-        	
-        } else if (true) {
+        if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
+            schreibeUmlaute("UMLAUTE.TXT")
+        } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.dir)) {
             _("Dateigröße in Zeile 0 rechtsbündig anzeigen")
-        } else if (true) {
-        	
+            lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 2, 15, qwiicopenlog.readInt32BE(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), qwiicopenlog.eWriteStringReadInt32BE.fileSize, qwiicopenlog.getString(qwiicopenlog.eArray.FileName)), lcd16x2rgb.eAlign.right)
+        } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.read)) {
+            lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 0, 15, qwiicopenlog.readInt32BE(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), qwiicopenlog.eWriteStringReadInt32BE.fileSize, qwiicopenlog.getString(qwiicopenlog.eArray.FileName)), lcd16x2rgb.eAlign.right)
+            lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 1, 0, 15, lcd16x2rgb.lcd16x2_text(qwiicopenlog.getString(qwiicopenlog.eArray.FileName)))
         }
     }
 })
@@ -119,14 +135,17 @@ function loescheDateien (pCount: number, logFilename: string) {
     sText = "" + iCount + " gelöscht"
 }
 input.onButtonEvent(Button.AB, ButtonEvent.Hold, function () {
-    if (true) {
+    if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
         loescheDateien(10, "REMOVE.LOG")
-    } else if (true) {
+    } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
         _("Datei lesen und Inhalt in 2 Zeilen (32 Byte) anzeigen, weiter mit B+")
         basic.setLedColor(basic.rgb(7, 0, 0))
+        qwiicopenlog.readFile(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), qwiicopenlog.getString(qwiicopenlog.eArray.FileName), 160)
         zeigeDateiInhalt()
-    } else if (true) {
+    } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.write)) {
+        qwiicopenlog.syncFile(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A))
         _("zurück zu Status 2 start")
+        qwiicopenlog.checkStatusRegister(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A))
         zeigeStatus()
     }
 })
