@@ -127,10 +127,10 @@ input.onButtonEvent(Button.B, ButtonEvent.Hold, function () {
             schreibeZeilen("ASCII94.LOG")
         } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.dir)) {
             _("aktuelle Datei löschen")
-            iRemove = 0
+            iRemove = qwiicopenlog.readInt32BE(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), qwiicopenlog.eWriteStringReadInt32BE.remove, qwiicopenlog.getString(qwiicopenlog.eArray.FileName))
             lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 2, 15, lcd16x2rgb.lcd16x2_text("" + iRemove + " gelöscht"), lcd16x2rgb.eAlign.right)
         } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.read)) {
-            iRemove = 0
+            iRemove = qwiicopenlog.readInt32BE(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), qwiicopenlog.eWriteStringReadInt32BE.remove, qwiicopenlog.getString(qwiicopenlog.eArray.FileName))
             lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 0, 15, lcd16x2rgb.lcd16x2_text("" + iRemove + " gelöscht"), lcd16x2rgb.eAlign.right)
             lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 1, 0, 15, lcd16x2rgb.lcd16x2_text(qwiicopenlog.getString(qwiicopenlog.eArray.FileName)))
         }
@@ -163,7 +163,6 @@ function loescheDateien (pCount: number, logFilename: string) {
     sText = "" + iCount + " gelöscht"
     lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 0, 15, lcd16x2rgb.lcd16x2_text(sText))
     qwiicopenlog.writeFile(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), logFilename, sText, qwiicopenlog.eCRLF.CRLF)
-    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 0, 15, iSize)
 }
 input.onButtonEvent(Button.AB, ButtonEvent.Hold, function () {
     if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
