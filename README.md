@@ -89,8 +89,8 @@ das Ergebnis in eine Protokolldatei REMOVE.LOG auf die Speicherkarte. Der Ablauf
 Die Calliope-App 'Speicherkarte verwalten' lädt folgende Erweiterungen:
 
 * [https://github.com/calliope-net/bit](https://calliope-net.github.io/bit/)
-* [https://github.com/calliope-net/lcd-16x2rgb](https://calliope-net.github.io/lcd-16x2rgb/)
-* [https://github.com/calliope-net/log-qwiicopenlog](https://calliope-net.github.io/log-qwiicopenlog/)
+* [https://github.com/calliope-net/lcd-16x2](https://calliope-net.github.io/lcd-16x2/)
+* [https://github.com/calliope-net/openlog](https://calliope-net.github.io/copenlog/)
 
 > [Upates für Erweiterungen; Erweiterungen aus einem Projekt löschen.](https://calliope-net.github.io/i2c-liste#updates)
 
