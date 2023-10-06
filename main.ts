@@ -105,34 +105,46 @@ input.onButtonEvent(Button.A, ButtonEvent.Hold, function () {
 })
 input.onButtonEvent(Button.B, ButtonEvent.Hold, function () {
     if (!(input.buttonIsPressed(Button.A))) {
-        if (true) {
+        if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
             schreibeZeilen("ASCII94.LOG")
-        } else if (true) {
+        } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.dir)) {
             _("aktuelle Datei löschen")
             iRemove = 0
-        } else if (true) {
+            lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 2, 15, lcd16x2rgb.lcd16x2_text("" + iRemove + " gelöscht"), lcd16x2rgb.eAlign.right)
+        } else if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.read)) {
             iRemove = 0
+            lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 0, 15, lcd16x2rgb.lcd16x2_text("" + iRemove + " gelöscht"), lcd16x2rgb.eAlign.right)
+            lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 1, 0, 15, lcd16x2rgb.lcd16x2_text(qwiicopenlog.getString(qwiicopenlog.eArray.FileName)))
         }
     }
 })
 function loescheDateien (pCount: number, logFilename: string) {
+    qwiicopenlog.listDirectory(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), "LOG00*.TXT", pCount)
     // Länge des Arrays aFileName=Anzahl Dateinamen fürs Protokoll
-    sText = ""
+    sText = "" + qwiicopenlog.getInt(qwiicopenlog.eArray.FileName, qwiicopenlog.eInt.Array_Length) + " Dateien"
+    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 0, 9, lcd16x2rgb.lcd16x2_text(sText))
+    qwiicopenlog.writeFile(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), logFilename, sText, qwiicopenlog.eCRLF.CRLF)
     // Zähler für gelöschte Dateien
     iCount = 0
     // Schleife durch alle gefundenen Dateinamen, kann weniger als pCount sein
-    for (let Index = 0; Index <= 0 - 1; Index++) {
+    for (let Index = 0; Index <= qwiicopenlog.getInt(qwiicopenlog.eArray.FileName, qwiicopenlog.eInt.Array_Length) - 1; Index++) {
         // fragt Register 13 fileSize vom aktuellen Dateiname (Array aFileName(iFileName))
-        iSize = 0
+        iSize = qwiicopenlog.readInt32BE(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), qwiicopenlog.eWriteStringReadInt32BE.fileSize, qwiicopenlog.getString(qwiicopenlog.eArray.FileName))
+        lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 10, 15, lcd16x2rgb.lcd16x2_text(convertToText(iSize)), lcd16x2rgb.eAlign.right)
+        lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 1, 0, 15, lcd16x2rgb.lcd16x2_text(qwiicopenlog.getString(qwiicopenlog.eArray.FileName)))
+        qwiicopenlog.writeFile(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), logFilename, "" + qwiicopenlog.getString(qwiicopenlog.eArray.FileName) + " " + iSize + " Bytes", qwiicopenlog.eCRLF.CRLF)
         if (iSize == 0) {
             // sendet aktuellen Dateiname an Register 15 remove
             // und bekommt Anzahl gelöschter Dateien zurück, 1 oder 0 wird zum Zähler addiert
-            iCount += 0
+            iCount += qwiicopenlog.readInt32BE(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), qwiicopenlog.eWriteStringReadInt32BE.remove, qwiicopenlog.getString(qwiicopenlog.eArray.FileName))
         }
         basic.pause(1000)
+        qwiicopenlog.changeIndex(qwiicopenlog.eArray.FileName, 1)
     }
     // Anzahl gelöschter Dateien fürs Protokoll auf Display und in die Datei auf Speicherkarte
     sText = "" + iCount + " gelöscht"
+    lcd16x2rgb.writeText(lcd16x2rgb.lcd16x2_eADDR(lcd16x2rgb.eADDR_LCD.LCD_16x2), 0, 0, 15, lcd16x2rgb.lcd16x2_text(sText))
+    qwiicopenlog.writeFile(qwiicopenlog.qwiicopenlog_eADDR(qwiicopenlog.eADDR.LOG_x2A), logFilename, sText, qwiicopenlog.eCRLF.CRLF)
 }
 input.onButtonEvent(Button.AB, ButtonEvent.Hold, function () {
     if (qwiicopenlog.isStatus(qwiicopenlog.eStatus.start)) {
